@@ -8,8 +8,9 @@
   "scripts": {
     "build": "nest build",
     "seed": "prisma db seed",
-    "migrate:dev": "npx prisma migrate dev",
-    "prisma:deploy": "npx prisma migrate deploy",
+    "reset:db": "prisma migrate reset",
+    "prisma:deploy": "prisma migrate deploy",
+    "view:db": "npx prisma studio",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",

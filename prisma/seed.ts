@@ -9,7 +9,7 @@ const prisma = new PrismaClient();
 const roundsOfHashing = 10;
 
     //   I use article this "upsert" to tell database to create this ariticle if the artical of the same title name is not found
-console.log("\n\nI runned seed.ts\n\n\n");
+console.log("\n\n SEEDING RUNNING seed.ts\n\n\n");
 async function seed() {
   // create two dummy articles
 
@@ -86,9 +86,8 @@ async function seed() {
   console.log({ user1, user2, post1, post2, post3 });
 }
 
-
 // execute the main function
- seed()
+ export default seed()
   .catch((e) => {
     console.error(e.message);
     process.exit(1);
@@ -97,4 +96,3 @@ async function seed() {
     // close Prisma Client at the end
     await prisma.$disconnect();
   });
-export default seed;

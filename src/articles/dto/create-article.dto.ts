@@ -5,7 +5,7 @@ import {
   IsOptional,
   IsString,
   MaxLength,
-  MinLength,
+  MinLength
 } from 'class-validator';
 
 export class CreateArticleDto {

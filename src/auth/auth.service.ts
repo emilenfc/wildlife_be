@@ -1,8 +1,8 @@
-//src/auth/auth.service.ts
 import {
+  BadRequestException,
   Injectable,
   NotFoundException,
-  UnauthorizedException,
+  UnauthorizedException
 } from '@nestjs/common';
 import { PrismaService } from './../prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
@@ -13,12 +13,17 @@ import * as bcrypt from 'bcrypt';
 export class AuthService {
   constructor(
     private prisma: PrismaService,
-    private jwtService: JwtService,
+    private jwtService: JwtService
   ) {}
 
   async login(email: string, password: string): Promise<AuthEntity> {
+        if (!email) {
+      throw new BadRequestException('Enter email and password');
+    }
     // Step 1: Fetch a user with the given email
-    const user = await this.prisma.user.findUnique({ where: { email: email } });
+    const user = await this.prisma.user.findUnique({
+      where: { email: email }
+    });
 
     // If no user is found, throw an error
     if (!user) {
@@ -35,7 +40,7 @@ export class AuthService {
 
     // Step 3: Generate a JWT containing the user's ID and return it
     return {
-      accessToken: this.jwtService.sign({ userId: user.id }),
+      accessToken: this.jwtService.sign({ userId: user.id })
     };
   }
 }
