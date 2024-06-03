@@ -28,3 +28,14 @@ model Article {
   author      User?    @relation(fields: [authorId], references: [id])
   authorId    String?
 }
+
+model Review {
+  id  String @id @default(uuid())
+  firstName String 
+  secondName String
+  image  String?
+  role   String?
+  company String?
+  message  String
+  hidden   Boolean @default(true)
+}

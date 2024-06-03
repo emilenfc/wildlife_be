@@ -13,30 +13,29 @@ console.log("\n\n SEEDING RUNNING seed.ts\n\n\n");
 async function seed() {
   // create two dummy articles
 
-    const passwordSabin = await bcrypt.hash('password-sabin', roundsOfHashing);
-  const passwordAlex = await bcrypt.hash('password-alex', roundsOfHashing);
+    const password = await bcrypt.hash('test@123', roundsOfHashing);
 
   const user1 = await prisma.user.upsert({
-    where: { email: 'sabin@adams.com' },
+    where: { email: 'test0@gmail.com' },
     update: {
-      password: passwordSabin,
+      password: password,
     },
     create: {
-      email: 'sabin@adams.com',
+      email: 'test0@gmail.com',
       name: 'Sabin Adams',
-      password: passwordSabin,
+      password: password,
     },
   });
 
   const user2 = await prisma.user.upsert({
-    where: { email: 'alex@ruheni.com' },
+    where: { email: 'test1@gmail.com' },
     update: {
-      password: passwordAlex,
+      password: password,
     },
     create: {
-      email: 'alex@ruheni.com',
+      email: 'test1@gmail.com',
       name: 'Alex Ruheni',
-      password: passwordAlex,
+      password: password,
     },
   });
 
