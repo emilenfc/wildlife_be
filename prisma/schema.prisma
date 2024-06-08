@@ -39,3 +39,35 @@ model Review {
   message  String
   hidden   Boolean @default(true)
 }
+model Country{
+  id String @id @default(uuid())
+  name String @unique
+  booking Booking[]
+}
+
+model Booking{
+  id String  @id @default(uuid())
+  firstName String
+  secondName String
+  midName String?
+  email String
+  phone Int?
+  messsage String?
+  contactPrefered ContactPreference
+  placeChosen String[]
+  travelingWith Int?
+  timeToStart DateTime?
+  timeToEnd   DateTime?
+  travelAnytime Boolean? @default(false)
+  contacted  Boolean @default(false)
+  BookedAt DateTime @default(now())
+  country Country? @relation(fields: [countryId],references: [id])
+  countryId String
+}
+
+enum ContactPreference {
+  Email
+  Phone
+  Both
+
+}

@@ -82,6 +82,26 @@ async function seed() {
     },
   });
 
+
+  //seeding countries
+   const countries = [
+    { name: 'Rwanda' },
+    { name: 'Uganda' },
+    { name: 'Kenya' },
+    { name: 'Tanzania' },
+  ];
+
+  for (const country of countries) {
+    const upsertedCountry = await prisma.country.upsert({
+      where: { name: country.name },
+      update: {},
+      create: {
+        name: country.name,
+      },
+    });
+    console.log(`Country created: ${upsertedCountry.name}`);
+  }
+
   console.log({ user1, user2, post1, post2, post3 });
 }
 
