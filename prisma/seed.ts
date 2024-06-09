@@ -97,8 +97,8 @@ async function seed() {
     console.log(`Country created: ${upsertedCountry.name}`);
         // Seeding ContentKeyPoint
     const contentKeyPoints = [
-      { keyPoint: `${country.name} is a beautiful country`, countryId: upsertedCountry.id },
-      { keyPoint: `${country.name} has rich cultural heritage`, countryId: upsertedCountry.id },
+      { keypoint: `${country.name} is a beautiful country`, countryId: upsertedCountry.id },
+      { keypoint: `${country.name} has rich cultural heritage`, countryId: upsertedCountry.id },
     ];
 
     for (const contentKeyPoint of contentKeyPoints) {
