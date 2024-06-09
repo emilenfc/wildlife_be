@@ -93,3 +93,14 @@ enum ContactPreference {
   Both
 
 }
+
+model Conservation {
+  id String @id @default(uuid())
+  place String @unique
+  image String
+  date DateTime
+  description String
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @updatedAt
+  deletedAt   DateTime? 
+}
