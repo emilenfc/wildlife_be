@@ -6,8 +6,9 @@ import { JwtModule } from '@nestjs/jwt';
 import { PrismaModule } from '../prisma/prisma.module';
 import { UsersModule } from '../users/users.module';
 import { JwtStrategy } from './jwt.strategy';
+import { env } from 'process';
 
-export const jwtSecret = 'zjP9h6ZI5LoSKCRj';
+export const jwtSecret = env.JWT_SECRET_KEY;
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ export const jwtSecret = 'zjP9h6ZI5LoSKCRj';
     PassportModule,
     JwtModule.register({
       secret: jwtSecret,
-      signOptions: { expiresIn: '5m' } // this for setting exipred time e.g. 30s, 7d, 24h
+      signOptions: { expiresIn: `${env.JWT_EXPIRES_IN}` } // this for setting exipred time e.g. 30s, 7d, 24h
     }),
     UsersModule
   ],
