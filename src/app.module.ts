@@ -9,9 +9,10 @@ import { ReviewModule } from './review/review.module';
 import { BookingModule } from './booking/booking.module';
 import { CountriesModule } from './countries/countries.module';
 import { ContentKeyPointModule } from './content-key-point/content-key-point.module';
+import { ImageCountryModule } from './image/image-country/image-country.module';
 
 @Module({
-  imports: [PrismaModule, ArticlesModule, UsersModule, AuthModule, ReviewModule, BookingModule, CountriesModule, ContentKeyPointModule],
+  imports: [PrismaModule, ArticlesModule, UsersModule, AuthModule, ReviewModule, BookingModule, CountriesModule, ContentKeyPointModule, ImageCountryModule],
   controllers: [AppController],
   providers: [AppService]
 })
