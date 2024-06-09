@@ -1,5 +1,4 @@
 import { IsString, IsOptional, IsInt, IsArray, IsEnum, IsBoolean, IsDate, } from 'class-validator';
-import { Type } from 'class-transformer';
 import { ContactPreference } from '@prisma/client'; 
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
