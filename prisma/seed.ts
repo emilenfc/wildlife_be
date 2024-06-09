@@ -11,7 +11,6 @@ const roundsOfHashing = 10;
     //   I use article this "upsert" to tell database to create this ariticle if the artical of the same title name is not found
 console.log("\n\n SEEDING RUNNING seed.ts\n\n\n");
 async function seed() {
-  // create two dummy articles
 
     const password = await bcrypt.hash('test@123', roundsOfHashing);
 
@@ -37,58 +36,48 @@ async function seed() {
       name: 'Alex Ruheni',
       password: password,
     },
-  });
-
-  // create three dummy articles
-  const post1 = await prisma.article.upsert({
-    where: { title: 'Prisma Adds Support for MongoDB' },
-    update: {
-      authorId: user1.id,
-    },
-    create: {
-      title: 'Prisma Adds Support for MongoDB',
-      body: 'Support for MongoDB has been one of the most requested features since the initial release of...',
-      description:
-        "We are excited to share that today's Prisma ORM release adds stable support for MongoDB!",
-      published: false,
-      authorId: user1.id,
-    },
-  });
-
-  const post2 = await prisma.article.upsert({
-    where: { title: "What's new in Prisma? (Q1/22)" },
-    update: {
-      authorId: user2.id,
-    },
-    create: {
-      title: "What's new in Prisma? (Q1/22)",
-      body: 'Our engineers have been working hard, issuing new releases with many improvements...',
-      description:
-        'Learn about everything in the Prisma ecosystem and community from January to March 2022.',
-      published: true,
-      authorId: user2.id,
-    },
-  });
-
-  const post3 = await prisma.article.upsert({
-    where: { title: 'Prisma Client Just Became a Lot More Flexible' },
-    update: {},
-    create: {
-      title: 'Prisma Client Just Became a Lot More Flexible',
-      body: 'Prisma Client extensions provide a powerful new way to add functionality to Prisma in a type-safe manner...',
-      description:
-        'This article will explore various ways you can use Prisma Client extensions to add custom functionality to Prisma Client..',
-      published: true,
-    },
-  });
-
+  }
+  );
+    console.log({ user1, user2 });
 
   //seeding countries
    const countries = [
-    { name: 'Rwanda' },
-    { name: 'Uganda' },
-    { name: 'Kenya' },
-    { name: 'Tanzania' },
+    {
+      name: 'Rwanda',
+      keyfact: 'Land of a Thousand Hills',
+      languages: ['Kinyarwanda', 'English', 'French'],
+      size: 26338,
+      security: 'High',
+      population: 12300000,
+      content: 'Rwanda is known for its breathtaking scenery.',
+    },
+    {
+      name: 'Uganda',
+      keyfact: 'Pearl of Africa',
+      languages: ['English', 'Swahili'],
+      size: 241038,
+      security: 'Moderate',
+      population: 42862958,
+      content: 'Uganda is home to the source of the Nile.',
+    },
+    {
+      name: 'Kenya',
+      keyfact: 'Safari Capital of the World',
+      languages: ['Swahili', 'English'],
+      size: 580367,
+      security: 'Moderate',
+      population: 53771300,
+      content: 'Kenya has a diverse climate.',
+    },
+    {
+      name: 'Tanzania',
+      keyfact: 'Home of Mount Kilimanjaro',
+      languages: ['Swahili', 'English'],
+      size: 945087,
+      security: 'Moderate',
+      population: 59734218,
+      content: 'Tanzania has a wealth of natural attractions.',
+    },
   ];
 
   for (const country of countries) {
@@ -97,12 +86,43 @@ async function seed() {
       update: {},
       create: {
         name: country.name,
+        keyfact: country.keyfact,
+        languages: country.languages,
+        size: country.size,
+        security: country.security,
+        population: country.population,
+        content: country.content,
       },
     });
     console.log(`Country created: ${upsertedCountry.name}`);
+        // Seeding ContentKeyPoint
+    const contentKeyPoints = [
+      { keyPoint: `${country.name} is a beautiful country`, countryId: upsertedCountry.id },
+      { keyPoint: `${country.name} has rich cultural heritage`, countryId: upsertedCountry.id },
+    ];
+
+    for (const contentKeyPoint of contentKeyPoints) {
+      await prisma.contentKeyPoint.create({
+        data: contentKeyPoint,
+      });
+      console.log(`ContentKeyPoint created for country: ${upsertedCountry.name}`);
+    }
+
+     // Seeding ImageCountry
+    const imageCountries = [
+      { image: 'https://images.unsplash.com/photo-1715484620057-1145dba8ac76?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', countryId: upsertedCountry.id },
+      { image: 'https://images.unsplash.com/photo-1715553179509-88f536acabcc?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', countryId: upsertedCountry.id },
+    ];
+
+    for (const imageCountry of imageCountries) {
+      await prisma.imageCountry.create({
+        data: imageCountry,
+      });
+      console.log(`ImageCountry created for country: ${upsertedCountry.name}`);
+    }
   }
 
-  console.log({ user1, user2, post1, post2, post3 });
+  
 }
 
 // execute the main function

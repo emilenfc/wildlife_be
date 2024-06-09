@@ -42,7 +42,29 @@ model Review {
 model Country{
   id String @id @default(uuid())
   name String @unique
-  booking Booking[]
+  keyfact String
+  languages String[]
+  size Int
+  security String
+  population Int
+  content String
+  images ImageCountry[]
+  contentKeyPoints ContentKeyPoint[]
+  bookings Booking[]
+
+}
+model ImageCountry{
+  id Int @id @default(autoincrement())
+  image String
+  country Country @relation(fields: [countryId], references: [id],onDelete: Cascade,onUpdate: Cascade)
+  countryId String
+  
+}
+model ContentKeyPoint{
+  id Int @id @default(autoincrement())
+  keyPoint String
+  country Country @relation(fields: [countryId], references: [id],onDelete: Cascade,onUpdate:Cascade)
+  countryId String
 }
 
 model Booking{
@@ -61,7 +83,7 @@ model Booking{
   travelAnytime Boolean? @default(false)
   contacted  Boolean @default(false)
   BookedAt DateTime @default(now())
-  country Country? @relation(fields: [countryId],references: [id])
+  country Country? @relation(fields: [countryId],references: [id],onDelete: Cascade)
   countryId String
 }
 
