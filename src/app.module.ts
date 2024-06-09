@@ -8,9 +8,10 @@ import { AuthModule } from './auth/auth.module';
 import { ReviewModule } from './review/review.module';
 import { BookingModule } from './booking/booking.module';
 import { CountriesModule } from './countries/countries.module';
+import { ContentKeyPointModule } from './content-key-point/content-key-point.module';
 
 @Module({
-  imports: [PrismaModule, ArticlesModule, UsersModule, AuthModule, ReviewModule, BookingModule, CountriesModule],
+  imports: [PrismaModule, ArticlesModule, UsersModule, AuthModule, ReviewModule, BookingModule, CountriesModule, ContentKeyPointModule],
   controllers: [AppController],
   providers: [AppService]
 })
