@@ -10,9 +10,10 @@ import { BookingModule } from './booking/booking.module';
 import { CountriesModule } from './countries/countries.module';
 import { ContentKeyPointModule } from './content-key-point/content-key-point.module';
 import { ImageCountryModule } from './image/image-country/image-country.module';
-
+import { ConservationsModule } from './conservations/conservations.module';
+import { ConfigModule } from '@nestjs/config';
 @Module({
-  imports: [PrismaModule, ArticlesModule, UsersModule, AuthModule, ReviewModule, BookingModule, CountriesModule, ContentKeyPointModule, ImageCountryModule],
+  imports: [PrismaModule, ArticlesModule, UsersModule, AuthModule, ReviewModule, BookingModule, CountriesModule, ContentKeyPointModule, ConservationsModule,ImageCountryModule, ConfigModule.forRoot({ isGlobal: true })],
   controllers: [AppController],
   providers: [AppService]
 })
