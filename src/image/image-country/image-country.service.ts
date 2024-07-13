@@ -6,8 +6,31 @@ import { PrismaService } from '../../prisma/prisma.service';
 @Injectable()
 export class ImageCountryService {
   constructor(private prisma: PrismaService) {}
-  async create(countryId: string, createImageCountryDto: CreateImageCountryDto) {
+  async create(countryId: string, file: Express.Multer.File) {
     try {
+       const { path, mimetype ,filename} = file;
+      let createImageCountryDto = new CreateImageCountryDto();
+      if (mimetype.startsWith('image')) {
+        createImageCountryDto.image = path;
+        const imageExists = await this.prisma.imageCountry.findFirst({
+          where: { image: createImageCountryDto.image, countryId }
+        });
+        if (imageExists) {
+          throw new BadRequestException(
+            `This Image ${filename} already exists in the country`
+          );
+        }
+      } else if (mimetype.startsWith('video')) {
+        createImageCountryDto.video = path;
+        const videoExists = await this.prisma.imageCountry.findFirst({
+          where: { video: createImageCountryDto.video, countryId }
+        });
+        if (videoExists) {
+          throw new BadRequestException(
+            `this Video ${filename} already exists in the country`
+          );
+        }
+      }
       const newImageCountry = await this.prisma.imageCountry.create({
         data: {
           ...createImageCountryDto,
