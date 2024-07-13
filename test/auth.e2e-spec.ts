@@ -13,7 +13,7 @@ describe('Authentication e2e', () => {
 
   beforeAll(async () => {
     const moduleRef: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [AppModule]
     }).compile();
 
     app = moduleRef.createNestApplication();
@@ -26,8 +26,8 @@ describe('Authentication e2e', () => {
     await prisma.user.create({
       data: {
         email: 'test1@test.com',
-        password,
-      },
+        password
+      }
     });
   });
 
@@ -40,19 +40,16 @@ describe('Authentication e2e', () => {
   describe('LOGIN account', () => {
     const user = {
       email: 'test1@test.com',
-      password: 'Testing@123',
+      password: 'Testing@123'
     };
 
     describe('Invalid requests for login', () => {
       it('Should return 404 on invalid email', async () => {
-      await request(server)
+        await request(server)
           .post('/auth/login')
           .send({ password: user.password, email: 'invalidemail' })
           .expect(404);
-
-
-      }
-      );
+      });
 
       it('Should return 401 for invalid credentials', async () => {
         await request(server)
@@ -61,12 +58,8 @@ describe('Authentication e2e', () => {
           .expect(401);
       });
 
-
-
       it('Should return 400 for empty data', async () => {
-     await request(server).post('/auth/login').send({})
-        .expect(400);  
-
+        await request(server).post('/auth/login').send({}).expect(400);
       });
     });
 

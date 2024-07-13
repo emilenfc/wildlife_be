@@ -13,7 +13,19 @@ import { ImageCountryModule } from './image/image-country/image-country.module';
 import { ConservationsModule } from './conservations/conservations.module';
 import { ConfigModule } from '@nestjs/config';
 @Module({
-  imports: [PrismaModule, ArticlesModule, UsersModule, AuthModule, ReviewModule, BookingModule, CountriesModule, ContentKeyPointModule, ConservationsModule,ImageCountryModule, ConfigModule.forRoot({ isGlobal: true })],
+  imports: [
+    PrismaModule,
+    ArticlesModule,
+    UsersModule,
+    AuthModule,
+    ReviewModule,
+    BookingModule,
+    CountriesModule,
+    ContentKeyPointModule,
+    ConservationsModule,
+    ImageCountryModule,
+    ConfigModule.forRoot({ isGlobal: true })
+  ],
   controllers: [AppController],
   providers: [AppService]
 })

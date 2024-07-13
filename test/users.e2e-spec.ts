@@ -7,7 +7,6 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import seed from '../prisma/seed';
 
-
 describe('Users e2e', () => {
   let app: INestApplication;
   let server;
@@ -17,7 +16,7 @@ describe('Users e2e', () => {
 
   beforeAll(async () => {
     const moduleRef: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [AppModule]
     }).compile();
 
     app = moduleRef.createNestApplication();
@@ -31,13 +30,13 @@ describe('Users e2e', () => {
     await prisma.user.create({
       data: {
         email: 'testuser@test.com',
-        password,
-      },
+        password
+      }
     });
 
     // Authenticate user
     const user = await prisma.user.findUnique({
-      where: { email: 'testuser@test.com' },
+      where: { email: 'testuser@test.com' }
     });
     authToken = jwtService.sign({ userId: user.id });
   });
@@ -50,7 +49,7 @@ describe('Users e2e', () => {
     it('Should create a new user', async () => {
       const newUser = {
         email: 'newuser@test.com',
-        password: 'Testing@123',
+        password: 'Testing@123'
       };
       const res = await request(server)
         .post('/users')
@@ -85,9 +84,8 @@ describe('Users e2e', () => {
     it('Should return 200 for non-existent user', async () => {
       const res = await request(server)
         .get('/users/nonexistent-id')
-          .set('Authorization', `Bearer ${authToken}`);
-        expect(res.body).toHaveProperty("message", "User not found");
-        
+        .set('Authorization', `Bearer ${authToken}`);
+      expect(res.body).toHaveProperty('message', 'User not found');
     });
   });
 
@@ -99,7 +97,7 @@ describe('Users e2e', () => {
       const res = await request(server)
         .patch(`/users/${userId}`)
         .set('Authorization', `Bearer ${authToken}`)
-          .send(updatedUserData);
+        .send(updatedUserData);
       expect(res.status).toEqual(200);
       expect(res.body).toHaveProperty('email', updatedUserData.email);
     });

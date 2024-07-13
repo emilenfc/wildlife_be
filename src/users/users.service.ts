@@ -45,7 +45,6 @@ export class UsersService {
    * @param id The id of the user to find
    */
   async findOne(id: string) {
-
     // return `This action returns a #${id} user`;
     const user = await this.prisma.user.findUnique({ where: { id } });
     if (!user) {
@@ -67,7 +66,7 @@ export class UsersService {
         roundsOfHashing
       );
     }
- 
+
     return this.prisma.user.update({ where: { id }, data: updateUserDto });
   }
 
@@ -76,7 +75,7 @@ export class UsersService {
    * @param id The id of the user to delete
    */
   async remove(id: string) {
-       let user = await this.prisma.user.findFirst({ where: { id } });
+    let user = await this.prisma.user.findFirst({ where: { id } });
     if (!user) {
       throw new NotFoundException('User not found');
     }

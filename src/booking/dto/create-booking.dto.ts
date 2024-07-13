@@ -1,11 +1,18 @@
-import { IsString, IsOptional, IsInt, IsArray, IsEnum, IsBoolean, IsDate, } from 'class-validator';
-import { ContactPreference } from '@prisma/client'; 
+import {
+  IsString,
+  IsOptional,
+  IsInt,
+  IsArray,
+  IsEnum,
+  IsBoolean,
+  IsDate
+} from 'class-validator';
+import { ContactPreference } from '@prisma/client';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
-
 export class CreateBookingDto {
-    @IsString()
-    @ApiProperty()
+  @IsString()
+  @ApiProperty()
   firstName: string;
 
   @IsString()
@@ -43,11 +50,9 @@ export class CreateBookingDto {
   @IsInt()
   travelingWith?: number;
 
-  
   @IsOptional()
   @ApiProperty()
   timeToStart?: Date;
-
 
   @ApiProperty()
   @IsOptional()
@@ -56,7 +61,7 @@ export class CreateBookingDto {
   @ApiPropertyOptional({ type: Boolean, default: false })
   @IsOptional()
   @IsBoolean()
-  travelAnytime?: boolean ;
+  travelAnytime?: boolean;
 }
 
 export class UpdateContactedDto {

@@ -5,6 +5,6 @@ import { PrismaModule } from '../../prisma/prisma.module';
 @Module({
   controllers: [ImageCountryController],
   imports: [PrismaModule],
-  providers: [ImageCountryService],
+  providers: [ImageCountryService]
 })
 export class ImageCountryModule {}

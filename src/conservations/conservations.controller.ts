@@ -1,13 +1,19 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards
+} from '@nestjs/common';
 import { ConservationsService } from './conservations.service';
 import { CreateConservationDto } from './dto/create-conservation.dto';
 import { UpdateConservationDto } from './dto/update-conservation.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
-import {
-  ApiBearerAuth,
-  ApiTags
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 @Controller('conservations')
 @ApiTags('Conservations')
 export class ConservationsController {
@@ -33,7 +39,10 @@ export class ConservationsController {
   @Patch(':id')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  update(@Param('id') id: string, @Body() updateConservationDto: UpdateConservationDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateConservationDto: UpdateConservationDto
+  ) {
     return this.conservationsService.update(id, updateConservationDto);
   }
 

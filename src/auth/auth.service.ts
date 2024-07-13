@@ -17,7 +17,7 @@ export class AuthService {
   ) {}
 
   async login(email: string, password: string): Promise<AuthEntity> {
-        if (!email) {
+    if (!email) {
       throw new BadRequestException('Enter email and password');
     }
     // Step 1: Fetch a user with the given email

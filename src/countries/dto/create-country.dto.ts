@@ -10,7 +10,10 @@ export class CreateCountryDto {
   @IsString()
   keyfact: string;
 
-  @ApiProperty({ description: 'Languages spoken in the country', type: [String] })
+  @ApiProperty({
+    description: 'Languages spoken in the country',
+    type: [String]
+  })
   @IsArray()
   @IsString({ each: true })
   languages: string[];

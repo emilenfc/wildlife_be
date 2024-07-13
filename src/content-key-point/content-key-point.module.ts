@@ -6,6 +6,6 @@ import { PrismaModule } from '../prisma/prisma.module';
 @Module({
   controllers: [ContentKeyPointController],
   imports: [PrismaModule],
-  providers: [ContentKeyPointService],
+  providers: [ContentKeyPointService]
 })
 export class ContentKeyPointModule {}

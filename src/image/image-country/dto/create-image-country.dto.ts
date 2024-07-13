@@ -1,8 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
 export class CreateImageCountryDto {
-    @ApiProperty()
-    @IsString()
-    image: string;
+  @IsOptional()
+  @ApiProperty()
+  @IsString()
+  image: string;
+
+  @IsOptional()
+  @ApiProperty()
+  @IsString()
+  video: string;
 }
