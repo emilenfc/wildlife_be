@@ -8,6 +8,26 @@ export class ImageCountryService {
   constructor(private prisma: PrismaService) {}
   async create(countryId: string, createImageCountryDto: CreateImageCountryDto) {
     try {
+      if (!createImageCountryDto.image && !createImageCountryDto.video) {
+        throw new BadRequestException('No image or video provided');
+      }
+      // check if the link exist
+      if (createImageCountryDto.image) {
+        const imageExists = await this.prisma.imageCountry.findFirst({
+          where: { image: createImageCountryDto.image, countryId },
+        })
+        if (imageExists) {
+          throw new BadRequestException('Image already exists');
+        }
+      }
+      if(createImageCountryDto.video) {
+        const videoExists = await this.prisma.imageCountry.findFirst({
+          where: { video: createImageCountryDto.video, countryId },
+        })
+        if (videoExists) {
+          throw new BadRequestException('Video already exists');
+        }
+      }
       const newImageCountry = await this.prisma.imageCountry.create({
         data: {
           ...createImageCountryDto,

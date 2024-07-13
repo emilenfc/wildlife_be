@@ -1,19 +1,39 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UploadedFiles, UseInterceptors, BadRequestException } from '@nestjs/common';
 import { ImageCountryService } from './image-country.service';
 import { CreateImageCountryDto } from './dto/create-image-country.dto';
 import { UpdateImageCountryDto } from './dto/update-image-country.dto';
 import { ApiParam, ApiBody } from '@nestjs/swagger';
 import { ApiTags } from '@nestjs/swagger';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import multerConfig from 'src/utils/config/multer.config';
 @Controller('image-country')
 @ApiTags('image-country')
 export class ImageCountryController {
-  constructor(private readonly imageCountryService: ImageCountryService) {}
+  constructor(private readonly imageCountryService: ImageCountryService,
+  ) { }
 
   @Post(':countryId')
-  @ApiParam({ name: 'countryId', description: 'The ID of the country' })
-  @ApiBody({ type: CreateImageCountryDto })
-  create(@Param('countryId') countryId: string, @Body() createImageCountryDto: CreateImageCountryDto) {
-    return this.imageCountryService.create(countryId, createImageCountryDto);
+  @UseInterceptors(FilesInterceptor('files',null, multerConfig))
+   @ApiParam({ name: 'countryId', description: 'The ID of the country' })
+ async uploadFile(@Param('countryId') countryId: string,
+  @UploadedFiles() files: Array<Express.Multer.File>
+  ) {
+    if (!files || files.length === 0) {
+      throw new BadRequestException('No files uploaded');
+    }
+    const uploadedMedia = files.map(async(file) => {
+      const { path, mimetype } = file;
+      let createImageCountryDto =new CreateImageCountryDto();
+      if (mimetype.startsWith('image')) {
+          createImageCountryDto.image = path;
+      }
+      else if (mimetype.startsWith('video')) {
+       createImageCountryDto.video = path;
+      }
+
+      return await this.imageCountryService.create(countryId, createImageCountryDto);
+    });
+    return await Promise.all(uploadedMedia);;
   }
 
   @Get()
@@ -33,7 +53,6 @@ export class ImageCountryController {
   update(@Param('id') id: string, @Body() updateImageCountryDto: UpdateImageCountryDto) {
     return this.imageCountryService.update(+id, updateImageCountryDto);
   }
-
   @Delete(':id')
   @ApiParam({ name: 'id', description: 'The ID of the image country' })
   remove(@Param('id') id: string) {
